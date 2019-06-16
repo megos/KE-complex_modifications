@@ -51,14 +51,10 @@
         </b-list-group-item>
       </b-list-group>
       <div style="margin-top: 1rem; margin-bottom: 3rem">
-        <div v-if="allFilesExpanded">
-          <b-btn variant="secondary"
-                 @click="setAllFileCollapsed(true)">Collapse All</b-btn>
-        </div>
-        <div v-else>
-          <b-btn variant="secondary"
-                 @click="setAllFileCollapsed(false)">Expand All</b-btn>
-        </div>
+        <b-btn variant="secondary"
+                @click="setAllFileCollapsed(allFilesExpanded)">
+                {{ allFilesExpanded ? 'Collapse All' : 'Expand All' }}
+        </b-btn>
       </div>
       <div class="card-outer"
            v-for="group in filteredGroups"
