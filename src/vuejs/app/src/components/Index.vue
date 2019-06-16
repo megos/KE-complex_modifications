@@ -227,7 +227,6 @@ export default {
       pageName: this.fileName(window.location.pathname),
       groups: [],
       filteredGroups: [],
-      allFilesExpanded: false,
       fileCollapsed: {},
       showJsonModalTitle: '',
       showJsonModalBody: '',
@@ -306,16 +305,6 @@ export default {
       })
     },
 
-    updateAllFilesExpanded() {
-      this.allFilesExpanded = true
-      for (let v of Object.values(this.fileCollapsed)) {
-        if (v) {
-          this.allFilesExpanded = false
-          return
-        }
-      }
-    },
-
     setAllFileCollapsed(value) {
       let fileCollapsed = {}
 
@@ -326,15 +315,11 @@ export default {
       })
 
       this.fileCollapsed = fileCollapsed
-
-      this.updateAllFilesExpanded()
     },
 
     toggleFileCollapsed(fileId) {
       const currentValue = this.fileCollapsed[fileId]
       this.$set(this.fileCollapsed, fileId, !currentValue)
-
-      this.updateAllFilesExpanded()
     },
 
     importJson(url) {
@@ -436,6 +421,18 @@ export default {
       })
 
       this.filteredGroups = filteredGroups
+    }
+  },
+  computed: {
+    allFilesExpanded() {
+      let allFilesExpanded = true
+      for (let v of Object.values(this.fileCollapsed)) {
+        if (v) {
+          let allFilesExpanded = false
+          return
+        }
+      }
+      return allFilesExpanded
     }
   }
 }
