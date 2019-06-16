@@ -78,11 +78,8 @@
                 <b-card-header>
                   <span class="rule-title"
                         @click="toggleFileCollapsed(file.id)">
-                    <span v-if="fileCollapsed[file.id]">
-                      <icon name="caret-square-right"></icon>
-                    </span>
-                    <span v-else>
-                      <icon name="caret-square-down"></icon>
+                    <span>
+                      <icon :name="`caret-square-${fileCollapsed[file.id] ? 'right' : 'down'}`"></icon>
                     </span>
                     {{ file.title }}
 
