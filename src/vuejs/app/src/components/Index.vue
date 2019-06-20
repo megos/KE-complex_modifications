@@ -1,21 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="md"
-              type="dark"
-              variant="dark">
-      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand href="./">Karabiner-Elements complex_modifications rules</b-navbar-brand>
-      <b-collapse is-nav
-                  id="nav_collapse">
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item href="https://github.com/pqrs-org/KE-complex_modifications"
-                      target="_blank">
-            <icon name="external-link-alt"></icon> GitHub
-          </b-nav-item>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-
+    <app-navbar />
     <div class="search">
       <socket id="loading-spinner"
               v-show="loading"></socket>
@@ -136,6 +121,7 @@ import lunr from 'lunr'
 import striptags from 'striptags'
 import { Socket } from 'vue-loading-spinner'
 import VueScrollTo from 'vue-scrollto'
+import AppNavbar from './AppNavbar'
 import CollapseIcon from './CollapseIcon'
 import CollapseItem from './CollapseItem'
 import DropdownItem from './DropdownItem'
@@ -198,6 +184,7 @@ export default {
   name: 'Index',
   components: {
     Socket,
+    AppNavbar,
     CollapseIcon,
     CollapseItem,
     DropdownItem
