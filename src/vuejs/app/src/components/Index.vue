@@ -95,27 +95,13 @@
                   </span>
 
                   <div class="float-right">
-                    <b-dropdown text="Import"
-                                variant="primary"
-                                split
-                                right
-                                @click="importJson(file.importUrl)">
-                      <b-dropdown-item-button @click="importJson(file.importUrl)">Import to Karabiner-Elements</b-dropdown-item-button>
-                      <b-dropdown-divider></b-dropdown-divider>
-                      <b-dropdown-item-button @click="showJsonModal(file.id)">
-                        <small>Show JSON</small>
-                      </b-dropdown-item-button>
-                      <b-dropdown-item-button v-clipboard:copy="pageUrl + '#' + file.id"
-                                              v-clipboard:success="urlCopied"
-                                              v-clipboard:error="urlCopyFailed">
-                        <small>Copy URL</small>
-                      </b-dropdown-item-button>
-                      <b-dropdown-item-button v-clipboard:copy="pageUrl + file.jsonUrl"
-                                              v-clipboard:success="urlCopied"
-                                              v-clipboard:error="urlCopyFailed">
-                        <small>Copy JSON URL</small>
-                      </b-dropdown-item-button>
-                    </b-dropdown>
+                    <dropdown-item
+                      :id="file.id"
+                      :importUrl="file.importUrl"
+                      :jsonUrl="file.jsonUrl"
+                      @click="importJson"
+                      @show-json-click="showJsonModal"
+                    />
                   </div>
                 </b-card-header>
                 <collapse-item
@@ -151,6 +137,7 @@ import striptags from 'striptags'
 import { Socket } from 'vue-loading-spinner'
 import VueScrollTo from 'vue-scrollto'
 import CollapseItem from './CollapseItem'
+import DropdownItem from './DropdownItem'
 
 const getFileName = path => {
   let name = path.substring(path.lastIndexOf('/') + 1)
@@ -211,11 +198,11 @@ export default {
   components: {
     Socket,
     CollapseItem,
+    DropdownItem
   },
   data() {
     return {
       loading: true,
-      pageUrl: window.location.origin + window.location.pathname,
       pageName: this.fileName(window.location.pathname),
       groups: [],
       filteredGroups: [],
@@ -417,14 +404,7 @@ export default {
   },
   computed: {
     allFilesExpanded() {
-      let allFilesExpanded = true
-      for (let v of Object.values(this.fileCollapsed)) {
-        if (v) {
-          let allFilesExpanded = false
-          return
-        }
-      }
-      return allFilesExpanded
+      return !Object.keys(this.fileCollapsed).some(key => this.fileCollapsed[key])
     }
   }
 }
