@@ -118,22 +118,12 @@
                     </b-dropdown>
                   </div>
                 </b-card-header>
-                <b-collapse :id="file.id + '-list-group'"
-                            :visible="!fileCollapsed[file.id]">
-                  <b-list-group flush>
-                    <b-list-group-item v-for="rule in file.rules"
-                                       :key="rule.id">
-                      {{ rule.description }}
-                      <div v-if="rule.availableSince"
-                           class="rule-available-since">
-                        Karabiner-Elements {{ rule.availableSince }} or later
-                      </div>
-                    </b-list-group-item>
-                    <b-list-group-item v-if="file.extraDescription"
-                                       v-html="file.extraDescription">
-                    </b-list-group-item>
-                  </b-list-group>
-                </b-collapse>
+                <collapse-item
+                  :id="file.id"
+                  :rules="file.rules"
+                  :visible="!fileCollapsed[file.id]"
+                  :extraDescription="file.extraDescription"
+                />
               </b-card>
             </div>
           </div>
@@ -160,6 +150,7 @@ import lunr from 'lunr'
 import striptags from 'striptags'
 import { Socket } from 'vue-loading-spinner'
 import VueScrollTo from 'vue-scrollto'
+import CollapseItem from './CollapseItem'
 
 const getFileName = path => {
   let name = path.substring(path.lastIndexOf('/') + 1)
@@ -218,7 +209,8 @@ class Group {
 export default {
   name: 'Index',
   components: {
-    Socket
+    Socket,
+    CollapseItem,
   },
   data() {
     return {
