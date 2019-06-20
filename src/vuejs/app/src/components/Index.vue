@@ -75,7 +75,7 @@
                   <span class="rule-title"
                         @click="toggleFileCollapsed(file.id)">
                     <span>
-                      <icon :name="`caret-square-${fileCollapsed[file.id] ? 'right' : 'down'}`"></icon>
+                      <collapse-icon :collapsed="fileCollapsed[file.id]" />
                     </span>
                     {{ file.title }}
 
@@ -136,6 +136,7 @@ import lunr from 'lunr'
 import striptags from 'striptags'
 import { Socket } from 'vue-loading-spinner'
 import VueScrollTo from 'vue-scrollto'
+import CollapseIcon from './CollapseIcon'
 import CollapseItem from './CollapseItem'
 import DropdownItem from './DropdownItem'
 
@@ -197,6 +198,7 @@ export default {
   name: 'Index',
   components: {
     Socket,
+    CollapseIcon,
     CollapseItem,
     DropdownItem
   },
